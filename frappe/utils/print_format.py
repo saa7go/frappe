@@ -9,6 +9,7 @@ from frappe.core.doctype.access_log.access_log import make_access_log
 from frappe.translate import print_language
 from frappe.utils.deprecations import deprecated
 from frappe.utils.pdf import get_pdf
+import cups
 
 no_cache = 1
 
@@ -149,10 +150,6 @@ def print_by_server(
 	doctype, name, printer_setting, print_format=None, doc=None, no_letterhead=0, file_path=None
 ):
 	print_settings = frappe.get_doc("Network Printer Settings", printer_setting)
-	try:
-		import cups
-	except ImportError:
-		frappe.throw(_("You need to install pycups to use this feature!"))
 
 	try:
 		cups.setServer(print_settings.server_ip)
